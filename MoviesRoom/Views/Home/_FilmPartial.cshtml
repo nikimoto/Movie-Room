@@ -1,0 +1,39 @@
+﻿@model ICollection<MoviesRoom.ViewModels.Film.FilmViewModel>
+
+@foreach (var item in Model)
+{
+    <div class="span6 film-section" value="@item.Id">
+        <h2>@item.Title</h2>
+        <a href="@(Url.Action("SingleFilm", "Home", new { item.Id }))">
+            <img src="@((item.Image != null) && (item.Image.Length > 2) ? "data:image />png;base64," +
+                                                              Convert.ToBase64String(item.Image) : "../../img/Unavailable_Pic.gif")"
+                 alt="Film Poster" class="film-image" />
+        </a>
+        <strong class="film-title-description">Description:</strong>
+        @if (@item.Description != null)
+        { 
+                    <p class="film-description">@(item.Description.Length > 200 ? item.Description.Substring(0, 200) + "..." : item.Description)</p>
+        }
+        else
+        {
+            <p class="film-description">No Description</p>
+        }
+        <div class="additional-info">
+            <div class="started-date">
+                Launch Date: <strong>@string.Format("{0:dd/MMM/yyyy hh:mm tt}", item.StartDate)</strong>
+            </div>
+            <div class="price">
+                Ticket Price: <strong>€@item.PricePerTicket</strong>
+            </div>
+            <div class="available-tickets">
+                Available Tickets: <strong>@item.AvailableTickets</strong>
+            </div>
+            <div class="available-tickets">
+                Category: <strong>@item.Category.Name</strong>
+            </div>
+        </div>
+        <p>
+            <a class="btn btn-primary" href="~/Home/SingleFilm/@item.Id">Buy Ticket &raquo;</a>
+        </p>
+    </div>
+}

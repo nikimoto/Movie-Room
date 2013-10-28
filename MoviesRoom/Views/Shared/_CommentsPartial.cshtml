@@ -1,0 +1,21 @@
+﻿@model ICollection<MoviesRoom.ViewModels.Comment.CommentViewModel>
+
+<h3>Comments:</h3>
+<div class="film-comments" id="comments">
+    @foreach (var comment in Model)
+    {
+        <div>
+            <div class="comment">
+                @comment.Text
+            </div>
+            <p class="italic">commented by: </p>
+            <div class="user">@comment.Author</div>
+            @if (User.IsInRole("admin"))
+            {
+                @Html.ActionLink("Edit", "Edit", "Comment", new { id = comment.Id }, new { @class = "btn-small" })
+                @Html.ActionLink("Delete", "Delete", "Comment", new { id = comment.Id }, new { @class = "btn-small" })
+            }
+        </div>
+    }
+</div>
+@Html.ValidationMessage("CustomError", new { @class = "add-comment" })

@@ -1,0 +1,106 @@
+﻿@using MoviesRoom.Areas.Administration.ViewModels
+@using MoviesRoom.ViewModels.Film
+
+@{
+    ViewBag.Title = "Administration";
+}
+
+<div class="row-fluid">
+    <div class="span3">
+        <h2>Categories</h2>
+        @(Html.Kendo()
+              .Grid<CategoryViewModel>()
+              .Name("grid-categories")
+              .Columns(columns =>
+              {
+                  columns.Bound(model => model.Name);
+                  columns.Command(command =>
+                  {
+                      command.Edit();
+                      command.Destroy();
+                  }).Title("Action");
+              })
+              .ToolBar(tool =>
+              {
+                  tool.Create();
+              })
+              .Pageable()
+              .Sortable()
+              .Filterable()
+              .Resizable(resize =>
+              {
+                  resize.Columns(true);
+              })
+              .Editable(edit =>
+              {
+                  edit.Mode(GridEditMode.PopUp);
+              })
+
+              .DataSource(data =>
+              {
+                  data.Ajax()
+                      .Model(m => m.Id(c => c.Id))
+                      .PageSize(5)
+                      .ServerOperation(true)
+                      .Read("GetAllCategories", "Category")
+                      .Update("UpdateCategory", "Category")
+                      .Create("CreateCategory", "Category")
+                      .Destroy("DeleteCategory", "Category");
+              })
+        )
+    </div>
+    <div class="span9" id="films-container">
+        <h2>Films</h2>
+        @(Html.Kendo()
+              .Grid<GridFilmViewModel>()
+              .Name("grid-films")
+              .Columns(columns =>
+              {
+                  columns.Bound(model => model.Title);
+                  columns.Bound(model => model.PricePerTicket);
+                  columns.Bound(model => model.AvailableTickets);
+                  columns.Bound(model => model.StartDate);
+                  columns.Bound(model => model.Description);
+                  columns.Bound(model => model.CategoryName);
+                  columns.Command(command =>
+                  {
+                      command.Edit();
+                      command.Destroy();
+                  }).Title("Action");
+              })
+              .ToolBar(tool =>
+              {
+                  tool.Create();
+              })
+              .Pageable()
+              .Sortable()
+              .Filterable()
+              .Resizable(resize =>
+              {
+                  resize.Columns(true);
+              })
+              .Editable(edit =>
+              {
+                  edit.Mode(GridEditMode.PopUp);
+                  edit.TemplateName("GridEditor");
+              })
+
+              .DataSource(data =>
+              {
+                  data.Ajax()
+                      .Model(m => m.Id(f => f.Id))
+                      .PageSize(5)
+                      .ServerOperation(true)
+                      .Read("GetAllFilms", "Film")
+                      .Update("UpdateFilm", "Film")
+                      .Create("CreateFilm", "Film")
+                      .Destroy("DeleteFilm", "Film");
+              })
+        )
+    </div>
+</div>
+
+@section Kendo {
+    @Styles.Render("~/Content/Kendo/css")
+    @Scripts.Render("~/bundles/kendo");
+}

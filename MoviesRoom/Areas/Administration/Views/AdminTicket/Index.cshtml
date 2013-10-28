@@ -1,0 +1,39 @@
+﻿@using MoviesRoom.Areas.Administration.ViewModels
+
+@{
+    ViewBag.Title = "Tickets";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@(Html.Kendo().Grid<AdminTicketViewModel>().Name("GridComments")
+    .Columns(c =>
+    {
+        c.Bound(m => m.Id).Visible(false);
+        c.Bound(m => m.FilmTitle);
+        c.Bound(m => m.ReferenceCode);
+        c.Bound(m => m.Price);
+        c.Bound(m => m.UserName);
+        c.Command(cmd =>
+        {
+           cmd.Destroy();
+        });
+    })
+    .DataSource(data =>
+    {
+        data.Ajax()
+            .PageSize(10)
+            .ServerOperation(true)
+            .Model(x => x.Id(m => m.Id))
+            .Read("ReadTickets", "AdminTicket")
+            .Destroy("DeleteTicket", "AdminTicket");
+    })
+    .Filterable()
+    .Pageable()
+    .Sortable())
+
+@section Kendo {
+    @Styles.Render("~/Content/Kendo/css")
+    @Scripts.Render("~/bundles/kendo");
+}

@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/ajax")
+    @RenderSection("kendo", required: false)
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Movies Room", "Index", "../Home", null, new { @class = "brand" })
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/Administration/Admin/Index">Films</a> </li>
+                                    <li>@Html.ActionLink("Tickets", "Index", "AdminTicket") </li>
+                                </ul>
+                            </li>
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li><a href="/Ticket/MyTickets">My Tickets</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Movies Room</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

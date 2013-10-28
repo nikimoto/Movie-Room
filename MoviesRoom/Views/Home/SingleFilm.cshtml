@@ -1,0 +1,132 @@
+﻿@model MoviesRoom.ViewModels.Film.FullFilmViewModel
+
+@{
+    ViewBag.Title = "Film Details";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (User.Identity.IsAuthenticated)
+{
+    if (Model.AvailableTickets > 0)
+    {
+        <div>
+            @using (Html.BeginForm("GenerateTickets", "Ticket", new { filmId = @Model.Id }))
+            {
+                <label for="tb-tickets">Tickets count: </label>
+                <input type="number" max="@Model.AvailableTickets" min="1"
+                       id="tb-tickets"
+                       value="1" name="TicketsCount" />
+                <input type="submit" value="Buy" class="btn btn-primary" />
+                @Html.ValidationSummary();
+            }
+        </div>
+    }
+    else
+    {
+        <h3>Sold out</h3>
+    }
+}
+
+@if (User.IsInRole("admin"))
+{
+    <br />
+    <div class="row-fluid">
+        <div class="span3">
+            <label for="UploadPicture">Upload new picture: </label>
+            @(Html.Kendo().Upload().Name("UploadPicture")
+            .Async(a =>
+            {
+                a.AutoUpload(true);
+                a.Save("UploadPicture", "Home", new { id = Model.Id });
+            })
+            .ShowFileList(false)
+            .Multiple(false)
+            .Events(ev =>
+                {
+                    ev.Success("successUpload");
+                    ev.Error("errorUpload");
+                }))
+        </div>
+        <div class="span3 text-warning" id="upload-result"></div>
+    </div>
+    <br />
+}
+
+<div class="row-fluid">
+    <img src="@((Model.Image != null) && (Model.Image.Length > 2) ?
+        "data:image/jpeg;base64," + Convert.ToBase64String(Model.Image) : "../../img/Unavailable_Pic.gif")"
+         alt="@Model.Title" class="film-larger-image" />
+    <div class="film-details">
+        <strong class="film-title">Title: </strong>
+        <div>@Model.Title</div>
+    </div>
+    <div class="film-details">
+        <strong class="film-title">Category: </strong>
+        <div>@Model.Category.Name</div>
+    </div>
+    <div class="film-details">
+        <strong class="film-title">Description: </strong>
+        <p class="film-description">@Model.Description</p>
+    </div>
+    <div class="film-details">
+        <strong class="film-title">Available Tickets: </strong>
+        <div>@Model.AvailableTickets</div>
+    </div>
+    <div class="film-details">
+        <strong class="film-title">Ticket Price: </strong>
+        <div>€@Model.PricePerTicket</div>
+    </div>
+    <div class="film-details">
+        <strong class="film-title">Start Date: </strong>
+        <div>@String.Format("{0:dd/MMM/yyyy hh:mm tt}", Model.StartDate)</div>
+    </div>
+    <hr />
+    <div id="updatater">
+        @Html.Partial("_CommentsPartial", Model.Comments)
+    </div>
+    <div class="add-comment">
+        @if (User.Identity.IsAuthenticated)
+        {
+            using (Ajax.BeginForm("AddComment",
+                new
+            {
+                FilmId = @Model.Id,
+                Author = User.Identity.Name
+            },
+                new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    UpdateTargetId = "updatater",
+                    InsertionMode = InsertionMode.Replace,
+                    OnSuccess = "slideComments"
+                }))
+            {
+                <textarea name="Text"></textarea>
+                <input type="submit" value="Leave a Comment" class="btn btn-primary" />
+            }
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@section Kendo {
+    @Styles.Render("~/Content/Kendo/css")
+    @Scripts.Render("~/bundles/kendo");
+}
+
+<script type="text/javascript">
+    function successUpload(ev) {
+        window.location.reload();
+    }
+
+    function errorUpload(ev) {
+        $('#upload-result').show(500).text('Upload failed (invalid file type)');
+        setTimeout(function () { $('#upload-result').hide(500); }, 2000);
+    }
+
+</script>

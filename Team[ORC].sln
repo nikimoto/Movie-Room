@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20827.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesRoom", "MoviesRoom\MoviesRoom.csproj", "{5B0FF105-BDC2-43EF-AD6B-73F419235725}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoviesRoom.Tests", "MoviesRoom.Tests\MoviesRoom.Tests.csproj", "{8DAE3C11-315A-42DC-B6A2-EE4ABCADEDF4}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs22
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = MoviesRoom\\MoviesRoom.csproj
+		SccProjectName1 = MoviesRoom
+		SccLocalPath1 = MoviesRoom
+		SccProjectUniqueName2 = MoviesRoom.Tests\\MoviesRoom.Tests.csproj
+		SccProjectName2 = MoviesRoom.Tests
+		SccLocalPath2 = MoviesRoom.Tests
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B0FF105-BDC2-43EF-AD6B-73F419235725}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B0FF105-BDC2-43EF-AD6B-73F419235725}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B0FF105-BDC2-43EF-AD6B-73F419235725}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B0FF105-BDC2-43EF-AD6B-73F419235725}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DAE3C11-315A-42DC-B6A2-EE4ABCADEDF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DAE3C11-315A-42DC-B6A2-EE4ABCADEDF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DAE3C11-315A-42DC-B6A2-EE4ABCADEDF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DAE3C11-315A-42DC-B6A2-EE4ABCADEDF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,31 @@
+﻿@using MoviesRoom.Models;
+
+@model MoviesRoom.Areas.Administration.ViewModels.GridFilmViewModel
+
+@{
+    var categories = ((IEnumerable<Category>)ViewData["categories"]).Select(c => new SelectListItem
+        {
+            Text = c.Name,
+            Value = c.Id.ToString()
+        });
+}
+
+<div class="well">
+    @Html.LabelFor(m => m.Title)
+    @Html.EditorFor(m => m.Title)
+
+    @Html.LabelFor(m => m.PricePerTicket)
+    @Html.EditorFor(m => m.PricePerTicket)
+
+    @Html.LabelFor(m => m.AvailableTickets)
+    @Html.EditorFor(m => m.AvailableTickets)
+
+    @Html.LabelFor(m => m.StartDate)
+    @Html.Kendo().DateTimePickerFor(m => m.StartDate).Format("MM/dd/yyyy hh:mm").Culture("en-US");
+
+    @Html.LabelFor(m => m.Description)
+    @Html.TextAreaFor(m => m.Description, new { style = "width:250px" })
+
+    @Html.LabelFor(m => m.CategoryId)
+    @Html.DropDownListFor(m => m.CategoryId, categories)
+</div>

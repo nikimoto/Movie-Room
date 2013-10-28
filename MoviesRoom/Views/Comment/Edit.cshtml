@@ -1,0 +1,40 @@
+﻿@model MoviesRoom.Models.Comment
+
+@{
+    ViewBag.Title = "Edit comment";
+}
+
+<h2>@ViewBag.TItle</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset class="form-horizontal">
+        <legend>Comment</legend>
+
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.FilmId)
+        @Html.HiddenFor(model => model.UserId)
+
+        <div class="control-group">
+            @Html.LabelFor(model => model.Text, new { @class = "control-label" })
+            <div class="controls">
+                @Html.TextAreaFor(model => model.Text)
+                @Html.ValidationMessageFor(model => model.Text, null, new { @class = "help-inline" })
+            </div>
+        </div>
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Save" class="btn" />
+            @Html.ActionLink("Cancel", "SingleFilm", "Home", new { id = Model.FilmId }, new { @class = "btn" })
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

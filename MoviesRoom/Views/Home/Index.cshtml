@@ -1,0 +1,19 @@
+﻿@model ICollection<MoviesRoom.ViewModels.Film.FilmViewModel>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@using (Ajax.BeginForm("Index", new AjaxOptions
+{
+    UpdateTargetId = "films",
+    InsertionMode = InsertionMode.Replace
+}))
+{
+    <input type="text" name="query" />
+    <input type="submit" value="Search &raquo;" class="btn btn-primary" />
+}
+
+<div id="films" class="row">
+    @Html.Partial("_FilmPartial", Model)
+</div>
